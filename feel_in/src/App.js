@@ -5,6 +5,8 @@ import OnBoardingPage from './pages/OnBoardingPage';
 import Join from './pages/Join';
 import Login from './pages/Login';
 import WhoAmI from './pages/WhoAmI';
+import styled from 'styled-components';
+import BookDetailPage from './pages/BookDetailPage';
 
 function App() {
   return (
@@ -16,6 +18,7 @@ function App() {
             <Route path="/join" element={<Join />} />
             <Route path="/login" element={<Login />} />
             <Route path="/whoami" element={<WhoAmI />} />
+            <Route path="/main/book" element={<BookDetailPage />} />
           </Routes>
         </RecoilRoot>
       </BrowserRouter>
