@@ -1,8 +1,8 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import { RecoilRoot } from 'recoil';
-// import MainPage from './pages/MainPage';
+
 import OnBoardingPage from './pages/OnBoardingPage';
-import styled from 'styled-components';
+import Join from './pages/Join';
 
 function App() {
   return (
@@ -11,6 +11,7 @@ function App() {
         <RecoilRoot>
           <Routes>
             <Route path="/" element={<OnBoardingPage />} />
+            <Route path="/join" element={<Join />} />
           </Routes>
         </RecoilRoot>
       </BrowserRouter>
