@@ -2,6 +2,8 @@ import styled from "styled-components";
 import WhoAmIInputBox from '../components/InputBox/WhoAmIInputBox';
 import PressBtn from '../components/Button/PressBtn';
 import { useEffect, useState } from "react";
+import { solutionPost } from "../api/Post";
+import { useNavigate } from "react-router-dom";
 
 const Div = styled.div`
     display: flex;
@@ -30,11 +32,24 @@ const Title = styled.p`
 
 function WhoAmI(){
     const [answers, setAnswers] = useState({});
+    const [isError, setIsError] = useState(true);
+    const navigate = useNavigate();
 
     const onClickBtn = () => {
-        Object.values(answers).forEach((value) => {
-            console.log(value);
-        });
+        try{
+            Object.values(answers).forEach((value, key) => {
+                const data = solutionPost(key+1, value.content);
+                if(data.status === "error"){
+                    setIsError(false);
+                }
+            });
+            if(isError){
+                navigate('/login');
+            }
+        } catch(error){
+            console.log(error);
+        }
+
     }
 
     return(
