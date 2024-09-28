@@ -8,7 +8,7 @@ const Div = styled.div`
 
 const InputBG = styled.div`
     display: flex;
-    width: 334px;
+    width: 534px;
     background-color: #FF7F44;
     justify-content: flex-end;
     border-radius: 20px;
@@ -16,7 +16,7 @@ const InputBG = styled.div`
 `;
 
 const Input = styled.input`
-    width: 300px;
+    width: 500px;
     height: 50px;
     border-radius: 20px;
     border: none;
