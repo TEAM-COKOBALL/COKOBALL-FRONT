@@ -2,6 +2,12 @@ import styled from "styled-components";
 import InputBox from "../components/InputBox/InputBox";
 import PressBtn from "../components/Button/PressBtn";
 import { useState } from "react";
+import { joinPost } from "../api/Auth";
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import { useSetRecoilState } from "recoil";
+import userState from "../recoil/userState";
+import { useNavigate } from "react-router-dom";
 
 const Div = styled.div`
     font-family: 'GamjaFlower-Regular';
@@ -59,6 +65,9 @@ function Join() {
     const [isPassword, setIsPassword] = useState(false);
     const [isPassword2, setIsPassword2] = useState(false);
 
+    const setUserState = useSetRecoilState(userState);
+    const navigate = useNavigate();
+
     const onChangeNickname = ((value) => {
         setNickname(value);
 
@@ -109,10 +118,22 @@ function Join() {
 
     const onClickBtn = () => {
         if(isNickname && isPassword && isPassword2){
-            console.log("회원가입 성공");
+            const data = joinPost(nickname, password, password2);
+            if(data.status === "success"){
+                toast.success('회원가입에 성공하였습니다.');
+                setUserState(
+                    {
+                        userName: nickname,
+                        token: data.token,
+                    }
+                );
+                navigate('/whoami');
+            }else{
+                toast.error("회원가입에 실패하였습니다.")
+            }
         }
         else{
-            console.log("실패");    
+            toast.error("입력 조건을 다시 확인해주세요.");
         }
     }
 
@@ -125,6 +146,7 @@ function Join() {
                 <LabelInput onChange={onChangePassword2} value={password2} placeholder={"비밀번호를 한 번 더 입력해주세요."} type="password" ErrorMsg={validPasswrod2Msg} />
             </InputBoxDiv>
             <PressBtn text={"회원가입"} onClick={onClickBtn} />
+            <ToastContainer /> {/* ToastContainer를 렌더링해서 화면에 toast 표시 */}
         </Div>
     )
 }

@@ -6,10 +6,8 @@ const { persistAtom } = recoilPersist();
 const userState = atom({
   key: 'userState', // 다른 atom과 구분되는 고유 키
   default: {
-    userId: '',
     userName: '',
-    email: '',
-    isAuthenticated: false,
+    token: '',
   },
   effects_UNSTABLE: [persistAtom], // 상태를 로컬 스토리지에 저장하는 효과 적용
 });
