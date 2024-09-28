@@ -10,6 +10,12 @@ import Modal from '../components/StickyNote/Modal';
 
 const Container = styled.div`
     display: flex;
+    flex-direction: column;
+    justify-content: center;
+`
+
+const BodyContainer = styled.div`
+    display: flex;
     justify-content: center;
     flex-direction: column;
     align-items: center;
@@ -22,8 +28,9 @@ const Container = styled.div`
 
 const WrapperArea = styled.div`
     display: flex;
-    justify-content: center;
+    justify-content: space-between;
     align-items: center;
+    gap: 20px;
 `;
 
 const BookContainer = styled.div`
@@ -150,43 +157,45 @@ function BookDetailPage() {
 
   return (
     <Container>
-      <Header />
-      <WrapperArea>
-        <LeftArrowButton onClickHandler={leftClickHandler} />
-        <BookContainer>
-          <LeftBookContainer>
-            <Title>{dummydata[currentIndex].title}</Title>
-            <StickyNoteContainer>
-              {dummydata[currentIndex].diaryList.map((note, idx) => (
-                <StickyNote
-                  key={idx}
-                  text={note.createDate}
-                  onClick={() => openModal(note.createDate, note.content)} // 날짜와 내용을 전달
-                />
-              ))}
-            </StickyNoteContainer>
-          </LeftBookContainer>
-          <RightBookContainer>
-            {currentIndex + 1 < dummydata.length && (
-              <>
-                <Title>{dummydata[currentIndex + 1].title}</Title>
-                <StickyNoteContainer>
-                  {dummydata[currentIndex + 1].diaryList.map((note, idx) => (
-                    <StickyNote
-                      key={idx}
-                      text={note.createDate}
-                      onClick={() => openModal(note.createDate, note.content)} // 날짜와 내용을 전달
-                    />
-                  ))}
-                </StickyNoteContainer>
-              </>
-            )}
-          </RightBookContainer>
-        </BookContainer>
-        <RightArrowButton onClickHandler={rightClickHandler} />
-      </WrapperArea>
-      <Overlay isOpen={modalOpen} /> {/* 어두운 오버레이 */}
-      <Modal isOpen={modalOpen} onClose={closeModal} date={modalDate} content={modalContent} />
+      <Header username={'류건'} pageNum={13} />
+      <BodyContainer>
+        <WrapperArea>
+          <LeftArrowButton onClickHandler={leftClickHandler} />
+          <BookContainer>
+            <LeftBookContainer>
+              <Title>{dummydata[currentIndex].title}</Title>
+              <StickyNoteContainer>
+                {dummydata[currentIndex].diaryList.map((note, idx) => (
+                  <StickyNote
+                    key={idx}
+                    text={note.createDate}
+                    onClick={() => openModal(note.createDate, note.content)} // 날짜와 내용을 전달
+                  />
+                ))}
+              </StickyNoteContainer>
+            </LeftBookContainer>
+            <RightBookContainer>
+              {currentIndex + 1 < dummydata.length && (
+                <>
+                  <Title>{dummydata[currentIndex + 1].title}</Title>
+                  <StickyNoteContainer>
+                    {dummydata[currentIndex + 1].diaryList.map((note, idx) => (
+                      <StickyNote
+                        key={idx}
+                        text={note.createDate}
+                        onClick={() => openModal(note.createDate, note.content)} // 날짜와 내용을 전달
+                      />
+                    ))}
+                  </StickyNoteContainer>
+                </>
+              )}
+            </RightBookContainer>
+          </BookContainer>
+          <RightArrowButton onClickHandler={rightClickHandler} />
+        </WrapperArea>
+        <Overlay isOpen={modalOpen} /> {/* 어두운 오버레이 */}
+        <Modal isOpen={modalOpen} onClose={closeModal} date={modalDate} content={modalContent} />
+      </BodyContainer>
     </Container>
   );
 }

@@ -2,6 +2,8 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import { RecoilRoot } from 'recoil';
 
 import OnBoardingPage from './pages/OnBoardingPage';
+import MainPage from './pages/MainPage';
+import WriteDiary from './pages/WriteDiary';
 import Join from './pages/Join';
 import Login from './pages/Login';
 import WhoAmI from './pages/WhoAmI';
@@ -15,6 +17,8 @@ function App() {
         <RecoilRoot>
           <Routes>
             <Route path="/" element={<OnBoardingPage />} />
+            <Route path="/main" element={<MainPage />} />
+            <Route path="/write" element={<WriteDiary />} />
             <Route path="/join" element={<Join />} />
             <Route path="/login" element={<Login />} />
             <Route path="/whoami" element={<WhoAmI />} />
