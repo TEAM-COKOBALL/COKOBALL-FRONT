@@ -7,11 +7,11 @@ import { useEffect, useState } from "react";
 const Div = styled.div`
     display: flex;
     flex-direction: column;
-    width: fit-content;
 `;
 
 const RowDiv = styled.div`
     display: flex;
+    align-items: center;
     &.MinusInputBoxDiv{
         gap: 10px;
     }
@@ -29,26 +29,34 @@ const ColDiv = styled.div`
 const P = styled.p`
     font-family: 'GamjaFlower-Regular';
     margin: 0;
-    margin-bottom: 5px;
+    font-size: 30px;
+    user-select: none;
 `;
 
-function MinusInputBox({id, onDelete}){
+function MinusInputBox({id, onDelete, value, onChange}){
+    const [content, setContent] = useState("");
+    useEffect(() => {
+        onChange(id, content);
+    }, [content]);
     return (
         <RowDiv className="MinusInputBoxDiv">
-            <InputBox/>
-            <div onClick={() => onDelete(id)}><MinusBtn/></div>
+            <InputBox placeholder={"내용을 입력해주세요."} value={value} onChange={setContent} />
+            <div onClick={() => onDelete(id)} style={{display:"flex"}}><MinusBtn/></div>
         </RowDiv>
     );
 }
 
-function WhoAmIInputBox({text = "기쁠 떄 어떤 행동을 하시나요?"}){
-    const [components, setComponents] = useState([{id: Date.now()}]);
+function WhoAmIInputBox({text, setAnswers, id}){
+    const [components, setComponents] = useState([{id: Date.now(), content: ""}]);
 
     // 플러스 버튼을 눌렀을 때 컴포넌트를 추가하는 함수
     const handleAddComponent = () => {
       setComponents((prevComponents) => [
         ...prevComponents,
-          { id: Date.now() }, // 고유한 ID를 부여 (Date.now() 사용)
+          { 
+            id: Date.now(),
+            content: "",
+          }, // 고유한 ID를 부여 (Date.now() 사용)
       ]);
     };
 
@@ -61,6 +69,21 @@ function WhoAmIInputBox({text = "기쁠 떄 어떤 행동을 하시나요?"}){
         }
     };
 
+    // content를 업데이트하는 함수
+    const updateContent = (id, newContent) => {
+        setComponents((prevComponents) =>
+            prevComponents.map((component) =>
+                component.id === id
+                    ? { ...component, content: newContent } // id가 일치하면 content 업데이트
+                    : component // 그렇지 않으면 기존 값 유지
+            )
+        );
+    };
+
+    useEffect(() => {
+        setAnswers((cur) => ({...cur, [id]:components}));
+    }, [components]);
+
     return(
         <Div>
             <P>⚑ {text}</P>
@@ -71,9 +94,11 @@ function WhoAmIInputBox({text = "기쁠 떄 어떤 행동을 하시나요?"}){
                             key={component.id}
                             id={component.id}
                             onDelete={handleDeleteComponent}
+                            value={component.content}
+                            onChange={updateContent}
                         />
                     })}
-                    <div onClick={handleAddComponent} style={{marginRight:"50px"}}><PlusBtn/></div>
+                    <div onClick={handleAddComponent} style={{marginRight:"50px", display:"flex"}}><PlusBtn/></div>
                 </ColDiv>
             </RowDiv>
         </Div>

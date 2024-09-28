@@ -21,6 +21,7 @@ const IconDiv = styled.div`
     transform: translateY(-50%); /* 수직으로만 중앙 정렬 */
     width: 50px; /* 아이콘 크기 조정 */
     height: 50px;
+    display: flex;
 `;
 
 const P = styled.p`
