@@ -1,5 +1,6 @@
 import CircleArrow from "../Arrow/CircleArrow";
 import styled from "styled-components";
+import { motion } from 'framer-motion';
 
 const Div = styled.div`
     position: relative;
@@ -10,6 +11,7 @@ const Div = styled.div`
     display: flex;
     align-items: center;
     justify-content: center;
+    cursor: pointer;
 `;
 
 const IconDiv = styled.div`
@@ -19,6 +21,7 @@ const IconDiv = styled.div`
     transform: translateY(-50%); /* 수직으로만 중앙 정렬 */
     width: 50px; /* 아이콘 크기 조정 */
     height: 50px;
+    display: flex;
 `;
 
 const P = styled.p`
@@ -26,18 +29,24 @@ const P = styled.p`
     font-size: 20px;
     color: white;
     margin: 0;
-    margin-left: 10px;
+    margin-left: 30px;
     user-select: none;
 `;
 
-function PressBtn({text, onClick}){
-    return(
-        <Div onClick={onClick}>
-            <IconDiv>
-                <CircleArrow/>
-            </IconDiv>
-            <P>{text}</P>
-        </Div>
+function PressBtn({ text, onClick }) {
+    return (
+        <motion.div
+            initial={{ scale: 1 }}
+            whileHover={{ scale: 1.1 }}
+            onClick={onClick}
+        >
+            <Div>
+                <IconDiv>
+                    <CircleArrow />
+                </IconDiv>
+                <P>{text}</P>
+            </Div>
+        </motion.div>
     );
 }
 
