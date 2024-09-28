@@ -3,6 +3,7 @@ import { useState, useRef } from 'react';
 import Dropdown from '../components/DropDown';
 import PlusBtn from '../components/Button/PlusBtn';
 import Header from '../components/common/Header';
+import PressBtn from '../components/Button/PressBtn';
 
 const GlobalStyle = createGlobalStyle`
   body{
@@ -112,6 +113,10 @@ const Input = styled.input`
   box-sizing: border-box;
 `;
 
+const Ul = styled.ul`
+  padding: 0;
+`;
+
 function WriteDiary() {
   const [view, setView] = useState(false);
   const [selectedEmotion, setSelectedEmotion] =
@@ -189,7 +194,7 @@ function WriteDiary() {
     <>
       <Header />
       <DiaryContainer>
-        <ul onClick={() => setView(!view)}>
+        <Ul onClick={() => setView(!view)}>
           <WhiteContainer>
             <div>
               {selectedEmotion !== '오늘 어떤 감정을 느꼈나요?'
@@ -203,7 +208,7 @@ function WriteDiary() {
               <Dropdown onSelect={handleEmotionSelect} />
             </EmotionContainer>
           )}
-        </ul>
+        </Ul>
 
         {selectedEmotion !== '오늘 어떤 감정을 느꼈나요?' && (
           <>
@@ -247,7 +252,9 @@ function WriteDiary() {
                 </ActionContainer>
               </Container3>
             </div>
-            {selectedActionId && <button onClick={saveData}>다음 버튼</button>}
+            <div style={{marginTop:"10px", width:"0"}}>
+              {selectedActionId && <PressBtn text={"다음"} onClick={saveData}/>}
+            </div>
           </>
         )}
       </DiaryContainer>

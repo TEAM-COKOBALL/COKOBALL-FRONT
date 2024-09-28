@@ -7,7 +7,6 @@ import WriteDiary from './pages/WriteDiary';
 import Join from './pages/Join';
 import Login from './pages/Login';
 import WhoAmI from './pages/WhoAmI';
-import styled from 'styled-components';
 import BookDetailPage from './pages/BookDetailPage';
 
 function App() {
