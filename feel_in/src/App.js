@@ -4,6 +4,7 @@ import { RecoilRoot } from 'recoil';
 import OnBoardingPage from './pages/OnBoardingPage';
 import Join from './pages/Join';
 import Login from './pages/Login';
+import WhoAmI from './pages/WhoAmI';
 
 function App() {
   return (
@@ -14,6 +15,7 @@ function App() {
             <Route path="/" element={<OnBoardingPage />} />
             <Route path="/join" element={<Join />} />
             <Route path="/login" element={<Login />} />
+            <Route path="/whoami" element={<WhoAmI />} />
           </Routes>
         </RecoilRoot>
       </BrowserRouter>
