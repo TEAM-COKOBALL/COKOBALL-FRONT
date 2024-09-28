@@ -3,6 +3,7 @@ import { RecoilRoot } from 'recoil';
 
 import OnBoardingPage from './pages/OnBoardingPage';
 import Join from './pages/Join';
+import Login from './pages/Login';
 
 function App() {
   return (
@@ -12,6 +13,7 @@ function App() {
           <Routes>
             <Route path="/" element={<OnBoardingPage />} />
             <Route path="/join" element={<Join />} />
+            <Route path="/login" element={<Login />} />
           </Routes>
         </RecoilRoot>
       </BrowserRouter>

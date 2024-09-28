@@ -23,7 +23,7 @@ function OnBoardingPage(){
         <Div>
             <Logo />
             <BtnDiv>
-                <PressBtnLong text={"로그인"} />
+                <PressBtnLong text={"로그인"} onClick={() => {navigate('/login')}} />
                 <PressBtnLong text={"회원가입"} onClick={() => {navigate('/join')}} />
             </BtnDiv>
         </Div>
