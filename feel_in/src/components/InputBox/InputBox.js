@@ -9,14 +9,14 @@ const Div = styled.div`
 const InputBG = styled.div`
     display: flex;
     width: 334px;
-    background-color: #C39E8D;
+    background-color: #FF7F44;
     justify-content: flex-end;
     border-radius: 20px;
     box-shadow: 4px 4px 4px rgba(0,0,0,0.25);
 `;
 
 const Input = styled.input`
-    width: 320px;
+    width: 300px;
     height: 50px;
     border-radius: 20px;
     border: none;
@@ -28,11 +28,11 @@ const Input = styled.input`
     font-size: 20px;
 `;
 
-function InputBox(){
+function InputBox({placeholder, onChange, value, type="text"}){
     return(
         <Div>
             <InputBG>
-                <Input/>
+                <Input placeholder={placeholder} value={value} onChange={(value) => onChange(value.target.value)} type={type}/>
             </InputBG>
         </Div>
     )
