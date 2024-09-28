@@ -2,6 +2,7 @@ import styled, { createGlobalStyle } from 'styled-components';
 import { useState, useRef } from 'react';
 import Dropdown from '../components/DropDown';
 import PlusBtn from '../components/Button/PlusBtn';
+import Header from '../components/common/Header';
 
 const GlobalStyle = createGlobalStyle`
   body{
@@ -21,6 +22,9 @@ const Diary = styled.textarea`
   height: 15em;
   border-radius: 20px;
   width: 100%;
+  &::placeholder {
+    color: #cdcccc;
+  }
 `;
 
 const DiaryContainer = styled.div`
@@ -66,7 +70,7 @@ const ActionContainer = styled.div`
   background-color: white;
   border-radius: 20px;
   gap: 15px;
-  padding: 15px;
+  padding: 25px;
   width: 100%;
 `;
 
@@ -182,70 +186,72 @@ function WriteDiary() {
   };
 
   return (
-    <DiaryContainer>
-      <GlobalStyle />
-      <ul onClick={() => setView(!view)}>
-        <WhiteContainer>
-          <div>
-            {selectedEmotion !== '오늘 어떤 감정을 느꼈나요?'
-              ? selectedEmotion
-              : '오늘 어떤 감정을 느꼈나요?'}
-          </div>
-          <div>{view ? <Arrow>▲</Arrow> : <Arrow>▼</Arrow>}</div>
-        </WhiteContainer>
-        {view && (
-          <EmotionContainer>
-            <Dropdown onSelect={handleEmotionSelect} />
-          </EmotionContainer>
+    <>
+      <Header />
+      <DiaryContainer>
+        <ul onClick={() => setView(!view)}>
+          <WhiteContainer>
+            <div>
+              {selectedEmotion !== '오늘 어떤 감정을 느꼈나요?'
+                ? selectedEmotion
+                : '오늘 어떤 감정을 느꼈나요?'}
+            </div>
+            <div>{view ? <Arrow>▲</Arrow> : <Arrow>▼</Arrow>}</div>
+          </WhiteContainer>
+          {view && (
+            <EmotionContainer>
+              <Dropdown onSelect={handleEmotionSelect} />
+            </EmotionContainer>
+          )}
+        </ul>
+
+        {selectedEmotion !== '오늘 어떤 감정을 느꼈나요?' && (
+          <>
+            <div>
+              <Title>일기</Title>
+              <Diary
+                value={diaryText}
+                onChange={(e) => setDiaryText(e.target.value)}
+                placeholder="오늘 느낀 감정과 그 이후 나의 행동에 대해 기록해주세요"
+              ></Diary>
+            </div>
+            <div>
+              <Title>나의 행동</Title>
+              <Container3>
+                <ActionContainer>
+                  {actions.map((action) => (
+                    <ActionItem
+                      key={action.id} // 고유한 key로 구분
+                      isSelected={selectedActionId === action.id} // 선택된 항목만 스타일 적용
+                      onClick={() => handleActionClick(action.id)} // 클릭하면 선택 또는 해제
+                    >
+                      {action.action}
+                    </ActionItem>
+                  ))}
+
+                  {selectedActionId === null && !isInputVisible && (
+                    <PlusBtn onClick={() => setIsInputVisible(true)} />
+                  )}
+
+                  {isInputVisible && (
+                    <div>
+                      <Input
+                        type="text"
+                        value={newAction}
+                        onChange={(e) => setNewAction(e.target.value)}
+                        onKeyDown={handleKeyDown}
+                        placeholder="새로운 행동을 입력하세요"
+                      />
+                    </div>
+                  )}
+                </ActionContainer>
+              </Container3>
+            </div>
+            {selectedActionId && <button onClick={saveData}>다음 버튼</button>}
+          </>
         )}
-      </ul>
-
-      {selectedEmotion !== '오늘 어떤 감정을 느꼈나요?' && (
-        <>
-          <div>
-            <Title>일기</Title>
-            <Diary
-              value={diaryText}
-              onChange={(e) => setDiaryText(e.target.value)}
-              placeholder="오늘 느낀 감정과 그 이후 나의 행동에 대해 기록해주세요"
-            ></Diary>
-          </div>
-          <div>
-            <Title>나의 행동</Title>
-            <Container3>
-              <ActionContainer>
-                {actions.map((action) => (
-                  <ActionItem
-                    key={action.id} // 고유한 key로 구분
-                    isSelected={selectedActionId === action.id} // 선택된 항목만 스타일 적용
-                    onClick={() => handleActionClick(action.id)} // 클릭하면 선택 또는 해제
-                  >
-                    {action.action}
-                  </ActionItem>
-                ))}
-
-                {selectedActionId === null && !isInputVisible && (
-                  <PlusBtn onClick={() => setIsInputVisible(true)} />
-                )}
-
-                {isInputVisible && (
-                  <div>
-                    <Input
-                      type="text"
-                      value={newAction}
-                      onChange={(e) => setNewAction(e.target.value)}
-                      onKeyDown={handleKeyDown}
-                      placeholder="새로운 행동을 입력하세요"
-                    />
-                  </div>
-                )}
-              </ActionContainer>
-            </Container3>
-          </div>
-          {selectedActionId && <button onClick={saveData}>다음 버튼</button>}
-        </>
-      )}
-    </DiaryContainer>
+      </DiaryContainer>
+    </>
   );
 }
 
